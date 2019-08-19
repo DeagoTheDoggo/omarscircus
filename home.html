@@ -11,6 +11,37 @@
 	<script src="js/main.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<title>Home | Omars Circus</title>
+	<link rel="icon" href="favicon.ico">
+
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
 
 <style type="text/css">
 	.trailersmalltext {
@@ -19,6 +50,9 @@
 </style>
 
 <body class="background222" style="background-color: #007bff;">
+
+	<div w3-include-html="includes/header.html"></div>
+
 	<div class="container">
 		<div class="jumbotron"> <!-- jumbotron col-md-6 offset-md-6 -->
 			<!-- <img src="img/lancer2015background.jpg" height="400" width="590" align="right"> -->
@@ -34,5 +68,12 @@
 
 		</div>
 	</div>
+
+	<div w3-include-html="includes/footer.html"></div>
+
+	<script>
+		includeHTML();
+	</script>
+	
     </body>
 </html>
